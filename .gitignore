@@ -13,11 +13,11 @@ TEST="/tmp/agtest"
 CHZE=$(ifconfig -s | awk '/BMRU/{print $1}' | sed -n 1p | cut -c1)
 EUG=$(route -n | awk '/UG/{ print $8}'| cut -c1 | grep 'e' | sed -n 1p)
 WUG=$(route -n | awk '/UG/{ print $8}'| cut -c1 | grep 'w' | sed -n 1p)
-clear; echo -e "\n\t\t\t\t$blue Genel Bilgiler$son\n"
 CHZ=$(ifconfig -s | awk '/BMRU/{print $1}' | sed -n 1p)
 CHZS=$(ifconfig -s | grep 'BMRU' | awk 'END { print NR }')
 CHZA=$(ifconfig -s | awk '/BMRU/{print $1}' | sed -n 1p | cut -c1)
 CHZW=$(ifconfig -s | awk '/BMRU/{print $1}' | sed -n 2p | cut -c1)
+clear; echo -e "\n\t\t\t\t$blue Genel Bilgiler$son\n"
 
 _wifi () {
 YER=$(iw dev $KCHZ1 link | awk '/SSID/{print $2}')
