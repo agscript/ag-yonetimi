@@ -237,7 +237,7 @@ case $apkhmtwenyc in
 		_wifi_tarama () {
 		WK=$(ifconfig -s | awk '/BMU|BMRU/{print $1}' | grep 'w' | cut -c1)
 		_Network_Manager () {
-		clear; echo -e "\n\t\t\t\t $blue Kullanılabilir Kablosuz Ağlar \n\n $yellow***************************************************************************************$son\n"
+		clear; echo -e "\n\t\t\t\t $blue Kullanılabilir Kablosuz Ağlar \n\n $yellow***************************************************************************************$son"
 		nmcli dev wifi | grep -v 'SSID' | awk 'FNR <= 20 {print "\n "$n}'
 		}
 		_X_Manager () {
