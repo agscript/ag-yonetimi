@@ -31,11 +31,9 @@ VRHZ=$(iwlist $KCHZ1 bitrate | awk '/Current/{print $3,$4}' | cut -c6-15)
 WSRC=$(ethtool -i $KCHZ1 | awk '/driver/{print $2}')
 VERS=$(ethtool -i $KCHZ1 | awk '/^version/{print $2}')
 PCIP1=$(ifconfig $KCHZ1 | awk '/inet/{print $2}' | sed -n -e 's/addr://g' -e 1p)
-PIPK1=$(ifconfig $KCHZ1 | awk '/inet/{print $2}' | sed -n -e 's/addr://g' -e 1p | cut -c1)
 MacA=$(ifconfig $KCHZ1 | awk '/ether/{print $1}')
 if [[ $MacA = 'ether' ]]; then MASK=$(ifconfig $KCHZ1 | awk '/netmask/{print $4}')
     else MASK=$(ifconfig $KCHZ1 | awk '/Mask/{print $4}' | sed -n -e 's/Mask://g' -e 1p); fi
-if [[ $PIPK1 -eq '1' ]]; then MIPP1=$(route -n | awk '/UG/{ print $2}' | sed -n 1p); fi
 fping -c1 t200 $PCIP1 &>$TEST/ipkont
 MTST=$(cat $TEST/ipkont | grep 'bytes'| awk '{print $5}' | cut -c1-5)
 if [[ $MTST = 'bytes' ]]; then SNC=$(echo -e "$cyan Veri Akışı Var$son")
@@ -54,17 +52,14 @@ ESRC=$(cat $TEST/etbl | awk '/driver/{print $2}')
 EVERS=$(cat $TEST/etbl | awk '/^version/{print $2}')
 BAGD=$(cat $TEST/etht | grep 'Link detected' | awk '{print $3}')
 EVRHZ=$(cat $TEST/etht | awk '/Speed/{print $2}')
-EPORT=$(cat $TEST/etht | awk '/Port/{print $2}')
+PORTS=$(cat $TEST/etht | awk '/Supported link modes:/{f=1;next} /Supported pause frame/{f=0} f' | tail -n1 -c16 | sed -e 's/^[[:space:]]*//' -e 's/\//:/')
 PCIP2=$(ifconfig $KCHZ2 | awk '/inet/{print $2}' | sed -n -e 's/addr://g' -e 1p)
-PIPK2=$(ifconfig $KCHZ2 | awk '/inet/{print $2}' | sed -n -e 's/addr://g' -e 1p | cut -c1)
 MacA=$(ifconfig $KCHZ2 | awk '/ether/{print $1}')
 if [[ $BAGD = 'yes' ]]; then EBAG='Var'; else EBAG='Yok'; fi
-if [[ $EPORT = 'MII' ]]; then PORTS='10/100:Mb/s'; elif [[ $EPORT = 'GMII' ]]; then PORTS='10/100/1000:Mb/s'; fi
 if [[ $MacA = 'ether' ]]; then MAD=$(ifconfig $KCHZ2 | awk '/ether/{print $2}' | sed -n 1p)
 	MASK=$(ifconfig $KCHZ2 | awk '/netmask/{print $4}')
 	    else MAD=$(ifconfig $KCHZ2 | awk '/HWaddr/{print $5}')
 		    MASK=$(ifconfig $KCHZ1 | awk '/Mask/{print $4}' | sed -n -e 's/Mask://g' -e 1p); fi
-if [[ $PIPK2 -eq '1' ]]; then MIPP2=$(route -n | awk '/UG/{ print $2}' | sed -n 1p); fi
 fping -c1 t200 $PCIP2 &>$TEST/kakont
 KTST=$(cat $TEST/kakont | grep 'bytes'| awk '{print $5}' | cut -c1-5)
 if [[ $KTST = 'bytes' ]]; then SNB=$(echo -e "$cyan Veri Akışı Var$son"); else SNB=$(echo -e "$red Veri Akışı Yok$son"); fi
