@@ -75,7 +75,7 @@ if [[ $NTST = 'bytes' ]]; then SNI=$(echo -e "$cyan Net Erişimi Var$son"); else
 echo -ne "\n$red [ N ]$blue Ayrıntılar $son $magenta  D-IP:$yellow $TLIP$son  = $SNI \n\n"
 }
 _kabtest () {
-KART=$(lspci -k | awk '/Ethernet/,0'| awk '/Kernel modules/{print $3}')
+KART=$(lspci -k 2>0 | awk '/Ethernet/,0'| awk '/Kernel driver/{print $3}')
 KDRM=$(dmesg | grep $KART | tail -n1 -c5)
 UGS=$(cat /proc/net/dev | grep '^e' | awk '{print $1}'| sed 's/://')
 if [[ (($KDRM = 'down') && ($CHZE = 'w') && ($EUG = 'e')) ]]; then sudo ifconfig $UGS down ; fi
