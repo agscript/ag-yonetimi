@@ -10,8 +10,6 @@
 # $$$$$$$  |\$$$$$$$ |$$$$$$$  |$$ |\$$$$$$$\ $$ | \$$ |\$$$$$$$\  \$$$$  |\$$$$$\$$$$  |\$$$$$$  |$$ |      $$ | \$$\  #
 # \_______/  \_______|\_______/ \__| \_______|\__|  \__| \_______|  \____/  \_____\____/  \______/ \__|      \__|  \__| #
 #                                                                                                                       #
-# Original Version: https://github.com/agscript/ag-yonetimi                                                             #
-#                                                                                                                       #
 #########################################################################################################################
 
 export LC_ALL=C #make output in English eg for later use with "du | grep"
@@ -1015,7 +1013,7 @@ fi
             	[bB] )
 			echo -e "${yellow_color}${g_texts[$language,22]}${normal_color}"
                 	WebBrowser
-			read -p "" sy ; sm="$sy --"
+			read sy ; sm=`(echo -e "$sy\t---")`
 			ADRS=$(cat $TEST/scan | grep -i "$sm" | awk '{print $3}')
 			$TRYC $ADRS &>/dev/null
 	        	Scan
