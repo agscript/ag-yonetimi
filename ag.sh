@@ -1015,7 +1015,7 @@ fi
             	[bB] )
 			echo -e "${yellow_color}${g_texts[$language,22]}${normal_color}"
                 	WebBrowser
-			read -p "" sy ; sm="$sy --"
+			read sy ; sm=`(echo -e "$sy\t---")`
 			ADRS=$(cat $TEST/scan | grep -i "$sm" | awk '{print $3}')
 			$TRYC $ADRS &>/dev/null
 	        	Scan
